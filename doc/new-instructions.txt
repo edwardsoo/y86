@@ -1,0 +1,50 @@
+Here is a list of all non-standard instructions added to the grammar for
+the Y86 CPU. Those listed with a * are given to the students. All others
+are only available as part of the solutions (and can be used when we ask
+students to implement new instructions.
+
+Instruction           iCd    iFn
+--------------------------------
+rmmovl rA, D(rB,1)     4      1
+rmmovl rA, D(rB,2)     4      2
+rmmovl rA, D(rB,4)     4      4
+
+mrmovl D(rB,1), rA     5      1
+mrmovl D(rB,2), rA     5      2
+mrmovl D(rB,4), rA     5      4
+
+mull                   6      4   *
+divl                   6      5   *
+modl                   6      6   *
+
+call   (rA)            8      8
+call  D(rB),   rA      8      1
+call  D(rB,1), rA      8      1
+call  D(rB,2), rA      8      2
+call  D(rB,4), rA      8      4
+call *D(rB),   rA      8      9
+call *D(rB,1), rA      8      9
+call *D(rB,2), rA      8      A
+call *D(rB,4), rA      8      C
+
+iaddl                  C      0
+isubl                  C      1
+iandl                  C      2
+ixorl                  C      3
+imull                  C      4
+idivl                  C      5
+imodl                  C      6
+
+leave                  D      0
+
+jmp   D(rB)            E      1
+jmp   D(rB,1)          E      1
+jmp   D(rB,2)          E      2
+jmp   D(rB,4)          E      4
+jmp  *D(rB)            E      9
+jmp  *D(rB,1)          E      9
+jmp  *D(rB,2)          E      A
+jmp  *D(rB,4)          E      C
+
+
+

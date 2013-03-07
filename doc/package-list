@@ -1,0 +1,16 @@
+arch.sm213.isa
+arch.sm213.machine
+arch.sm213.machine.solution
+arch.sm213.machine.student
+arch.y86.isa
+arch.y86.machine
+arch.y86.machine.pipe.student
+arch.y86.machine.pipeminus.student
+arch.y86.machine.seq.student
+grammar
+isa
+machine
+ui
+ui.cli
+ui.gui
+util
