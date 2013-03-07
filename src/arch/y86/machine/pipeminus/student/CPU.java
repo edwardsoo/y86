@@ -29,7 +29,9 @@ public class CPU extends AbstractY86CPU.Pipelined {
    */
   private boolean isDataHazardOnReg (int reg)
   {
-    return reg != R_NONE && (E.dstE.get() == reg || M.dstE.get() == reg || W.dstE.get() == reg);
+    // Edward: I added check for data hazard from memory-to-register write back (dstM)
+    return reg != R_NONE && (E.dstE.get() == reg || M.dstE.get() == reg || W.dstE.get() == reg || 
+	    E.dstM.get() == reg || M.dstM.get() == reg || W.dstM.get() == reg);
   }
 
   /**
@@ -38,14 +40,18 @@ public class CPU extends AbstractY86CPU.Pipelined {
   @Override protected void pipelineHazardControl () throws Register.TimingException {
 
     // Data Hazards
-    if (isDataHazardOnReg (d.srcA.getValueProduced())) {
+    // Edward: I added check for data hazard on register rB
+    if (isDataHazardOnReg (d.srcA.getValueProduced()) || 
+	    isDataHazardOnReg (d.srcB.getValueProduced())) {
       F.stall  = true;
       D.stall  = true;
       E.bubble = true;
     }
 
     // Control Hazard: Conditional JXX
-    else if ((D.iCd.get()==I_JXX && D.iFn.get()!=C_NC)) {
+    // Edward: I added check for conditional jump in E 
+    else if ((D.iCd.get()==I_JXX && D.iFn.get()!=C_NC) || 
+	    (E.iCd.get()==I_JXX && E.iFn.get()!=C_NC)) {
       F.stall  = true;
       D.bubble = true;
     }
